@@ -1,0 +1,23 @@
+body {
+  padding-top: 100px;
+}
+
+img {
+  width: 300px;
+}
+.img-content{
+  background-color:#d9edf7;
+  overflow:auto;
+  margin-bottom: 20px;
+  ul{
+    overflow:auto;
+    li {
+      background-color: #fff;
+      border: solid 1px #000;
+      min-height: 300px;
+      display: inline-block;
+      margin: 5px;
+      vertical-align:top;
+    }
+  }
+}

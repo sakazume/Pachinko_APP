@@ -1,0 +1,44 @@
+html(lang="ja")
+    head
+        title 機種情報検索
+        meta(charset="utf-8")
+        meta(name="viewport" , content="initial-scale=1, maximum-scale=1")
+        meta(name="apple-mobile-web-app-capable" , content="yes")
+        meta(name="apple-mobile-web-app-status-bar-style" ,content="black")
+
+
+        link(href="/css/lib/ratchet/ratchet.css",rel="stylesheet",type="text/css")
+        link(href="/css/lib/ratchet/ratchet-theme-ios.css",rel="stylesheet",type="text/css")
+        link(href="/css/sp/cr-select.css",rel="stylesheet",type="text/css")
+
+    body
+        header.bar.bar-nav
+            a.icon.icon-search.pull-right
+            h1.title 機種選択
+        div.content
+
+            div.card
+                ul.table-view
+                    li.table-view-cell
+                        a.navigate-right(href='../two.html', data-transition='slide-in')
+                            | 都道府県
+                        a.navigate-right(href='../two.html', data-transition='slide-in')
+                            | 市町村
+                        a.navigate-right(href='../two.html', data-transition='slide-in')
+                            | その他
+
+
+            nav.bar.bar-tab
+                a.tab-item.active(href="#")
+                    span.icon.icon-home
+                    span.tab-label Home
+
+                a.tab-item(href="#")
+                    span.icon.icon-search
+                    span.tab-label 住所フィルタ
+
+                a.tab-item(href="#")
+                    span.icon.icon-gear
+                    span.tab-label Settings
+
+            script(type="text/javascript",src="/js/lib/ratchet/ratchet.js")

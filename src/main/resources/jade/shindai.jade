@@ -1,0 +1,41 @@
+html(lang="ja")
+    head
+        meta(charset="UTF-8")
+
+        title パチサーチ
+        link(href="/css/reset.css",rel="stylesheet",type="text/css")
+        link(href="/css/lib/bootstrap/bootstrap.min.css", rel="stylesheet",type="text/css")
+        link(href="/css/lib/bootstrap/bootswatch.min.css", rel="stylesheet",type="text/css")
+
+    body(style="padding-top:100px")
+        include ../_nav.jade
+        div.container
+            div.row
+                div.col-lg-12
+
+                    h4 新台入替情報
+                    table.table.table-striped.table-hover
+                        thead
+                            tr
+                                th 種類
+                                th 日付
+                                th 機種
+                                th 店舗名
+                                th 住所
+                        tbody
+                            tr
+                                td 新台入替
+                                td 2014/03/01
+                                td CR麻雀姫伝説 2台
+                                td ピーアーク銀座
+                                td 東京都中央区銀座5-12-1
+
+
+
+
+
+
+
+
+        script(src="//code.jquery.com/jquery-1.11.2.min.js")
+        script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js")

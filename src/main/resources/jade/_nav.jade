@@ -1,0 +1,27 @@
+div.navbar.navbar-default.navbar-fixed-top
+    div.container
+        div.navbar-header
+            a.navbar-brand(href='../') パチサーチ
+            button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-main')
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar
+        div#navbar-main.navbar-collapse.collapse
+            ul.nav.navbar-nav
+                li
+                    a(href='../help/') 機種一覧
+                li
+                    a(href='../help/') 新機種情報
+            form.navbar-form.navbar-left(role='search')
+                .form-group
+                    input.form-control(type='text', placeholder='Search',name='name')
+                    button.btn.btn-default(type='submit') 検索
+
+
+            ul.nav.navbar-nav.navbar-right
+                li
+                    a(href='http://builtwithbootstrap.com/', target='_blank') エリア設定
+                li
+                    a(href='http://builtwithbootstrap.com/', target='_blank') 問い合わせ
+                li
+                    a(href='https://wrapbootstrap.com/?ref=bsw', target='_blank') 運用ブログ

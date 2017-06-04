@@ -1,0 +1,34 @@
+html(lang="ja")
+    head
+        title 玉貸し選択
+        meta(charset="utf-8")
+        meta(name="viewport" , content="initial-scale=1, maximum-scale=1")
+        meta(name="apple-mobile-web-app-capable" , content="yes")
+        meta(name="apple-mobile-web-app-status-bar-style" ,content="black")
+
+
+        link(href="/css/lib/ratchet/ratchet.css",rel="stylesheet",type="text/css")
+        link(href="/css/lib/ratchet/ratchet-theme-ios.css",rel="stylesheet",type="text/css")
+        link(href="/css/sp/cr-select.css",rel="stylesheet",type="text/css")
+
+    body
+        header.bar.bar-nav
+            a(href="index.html",data-transition="slide-out").icon.icon-left-nav.pull-left
+            a.icon.icon-compose.pull-right
+            h1.title 玉貸し選択
+        div.content
+            ul.table-view.cr-list
+                li.table-view-cell
+                    a 1.6円
+                        span.media-object.icon.icon-check.pull-left
+                li.table-view-cell
+                    a 2円
+                        span.media-object.icon.icon-check.pull-left
+                li.table-view-cell
+                    a 4円
+                        span.media-object.icon.icon-check.pull-left
+
+
+            a(href="test2.html",data-transition="slide-in")
+                button.btn-positive.btn-block 検索開始
+            script(type="text/javascript",src="/js/lib/ratchet/ratchet.js")

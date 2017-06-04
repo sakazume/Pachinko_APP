@@ -1,0 +1,60 @@
+html(lang="ja")
+    head
+        meta(charset="UTF-8")
+
+        title パチサーチ | {mmodels.name} レート別一覧
+        link(href="/asset/css/reset.css",rel="stylesheet",type="text/css")
+        link(href="/asset/css/lib/bootstrap/bootstrap.min.css", rel="stylesheet",type="text/css")
+        link(href="/asset/css/lib/bootstrap/bootswatch.min.css", rel="stylesheet",type="text/css")
+
+    body(style="padding-top:100px")
+        include _nav
+
+        div.container
+            div.row
+                div.col-lg-12
+
+                    h2(style="margin-bottom: 15px;") #{mmodels.name} レート別一覧
+
+                    ul.nav.nav-tabs
+                        for price, index in priceList
+                            if index==0
+                                li(data-price="#{price}")
+                                    a(href='#tab#{index}', data-toggle='tab') #{price}円
+                            else
+                                li(data-price="#{price}")
+                                    a(href='#tab#{index}', data-toggle='tab') #{price}円
+
+
+                    // / タブ
+                    div.tab-content
+                        for price, infoindex in priceList
+
+                            div(id="tab#{infoindex}",class="tab-pane fade")
+                                h3 #{price}円
+                                table.table.table-striped.table-hover
+                                    thead
+                                        tr
+                                            th 店名
+                                            th 住所
+                                            th 営業時間
+                                            th 台数
+                                    tbody
+                                        for rowitem, index in priceInfoMap.get(price.toString())
+                                            tr
+                                                td #{rowitem.name}
+                                                td #{rowitem.address}
+                                                td #{rowitem.hours}
+                                                td #{rowitem.number}台
+
+
+
+
+
+
+
+        script(src="//code.jquery.com/jquery-1.11.2.min.js")
+        script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js")
+        script(src="/asset/js/common.js")
+        script(src="/asset/js/tenpo.js")
+

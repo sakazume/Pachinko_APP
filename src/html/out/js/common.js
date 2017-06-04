@@ -1,0 +1,1 @@
+function GetQueryString(){var n={};if(1<window.location.search.length)for(var o=window.location.search.substring(1),e=o.split("&"),t=0;t<e.length;t++){var r=e[t].split("="),i=decodeURIComponent(r[0]),a=decodeURIComponent(r[1]);n[i]=a}return n}

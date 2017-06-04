@@ -1,0 +1,1 @@
+$(document).ready(function(){var a=GetQueryString();$('[data-price="'+a.rate+'"] a').click()});
