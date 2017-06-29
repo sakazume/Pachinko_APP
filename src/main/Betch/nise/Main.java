@@ -7,8 +7,11 @@ import org.jsoup.select.Elements;
 import pachinko.library.JsoupHelper2;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+
+import static java.util.Map.Entry;
 
 /**
  * Created by gyutr20 on 2017/06/05.
@@ -24,24 +27,36 @@ public class Main {
         Elements els = getListLink(doc);
         List<Document> docList = new ArrayList<>();
 
-        Map<String,Elements> map = new HashMap<>();
+        Map<String,Document> map = new HashMap<>();
 
-        els.forEach(s->{
+        els.forEach(s -> {
             String href = s.attr("href");
             String text = s.text();
             String niseUrl = domain + href;
             Document dataDoc = JsoupHelper2.run(niseUrl);
-
-            Elements slotDataEls = getSlotDataEls(dataDoc);
-            map.put(text,slotDataEls);
+            map.put(text, dataDoc);
+            System.out.println(text + "を取得");
         });
-        JsoupHelper2.end();
+        for(Entry<String,Document> ent:map.entrySet()) {
+            Document slotDoc = ent.getValue();
+            Elements slotEls = getSlotDataEls(slotDoc);
 
-        for(Map.Entry<String,Elements> ent : map.entrySet()){
-            for (Element element : ent.getValue()) {
-              new UnitData(element);
+            for(int i=1;i<slotEls.size();i++) {
+                Element el = slotEls.get(i);
+                UnitData uni = new UnitData(el);
+                uni.setDate(getDate(i * -1));
+                System.out.println(uni.getDate());
             }
+
+//            slotEls.stream().forEach(s->{
+//                new UnitData(s);
+//            });
+
+            System.out.println(slotEls.size());
         }
+
+
+        JsoupHelper2.end();
 
 
     }
@@ -55,12 +70,14 @@ public class Main {
         return doc.select(".sort a");
     }
 
-    public static void getDate(Integer i) {
+    public static Date getDate(Integer i) {
         LocalDateTime d = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         String s = formatter.format(d.plusDays(i));
         System.out.println(s);
-        //        d.plusDays(i);
+        Date date = Date.from(d.plusDays(i).atZone(ZoneId.systemDefault()).toInstant());
+        return date;
+
     }
 
     public static Elements getSlotDataEls(Document doc) {
