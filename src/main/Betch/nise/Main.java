@@ -1,9 +1,11 @@
 package nise;
 
+import com.avaje.ebean.Ebean;
 import lombok.Data;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import pachinko.db.Papimo;
 import pachinko.library.JsoupHelper2;
 
 import java.time.LocalDateTime;
@@ -20,9 +22,9 @@ public class Main {
 
     static String domain = "http://papimo.jp";
 
-    public static void main(String... args) {
-        String url = "http://papimo.jp/h/00031715/hit/index_sort/216060001/1-20-104488";
-        Document doc = JsoupHelper2.run(url);
+    public static void exec(Tenp tenp) {
+//        String url = "http://papimo.jp/h/00031715/hit/index_sort/216060001/1-20-104488";
+        Document doc = JsoupHelper2.run(tenp.getUrl());
 
         Elements els = getListLink(doc);
         List<Document> docList = new ArrayList<>();
@@ -40,25 +42,32 @@ public class Main {
         for(Entry<String,Document> ent:map.entrySet()) {
             Document slotDoc = ent.getValue();
             Elements slotEls = getSlotDataEls(slotDoc);
+            UnitData.取得位置算出(slotEls.get(0));
 
             for(int i=1;i<slotEls.size();i++) {
                 Element el = slotEls.get(i);
+
                 UnitData uni = new UnitData(el);
                 uni.setDate(getDate(i * -1));
-                System.out.println(uni.getDate());
+                Papimo papomo = uni.createPapimo();
+                papomo.set台番号(ent.getKey());
+                papomo.set店名(tenp.get店名());
+                Ebean.save(papomo);
             }
 
-//            slotEls.stream().forEach(s->{
-//                new UnitData(s);
-//            });
-
-            System.out.println(slotEls.size());
         }
-
-
         JsoupHelper2.end();
+    }
 
+    public static void main(String... args) {
+        List<Tenp> tenpList = Arrays.asList(
+                new Tenp("アイランド秋葉原","http://papimo.jp/h/00031715/hit/index_sort/216060001/1-20-104488"),
+                new Tenp("ビッグアップル秋葉原","http://papimo.jp/h/00031580/hit/index_sort/216060001/1-20-106178")
+        );
+        tenpList.stream().forEach(tenp->{
+            exec(tenp);
 
+        });
     }
 
     /**
@@ -74,39 +83,27 @@ public class Main {
         LocalDateTime d = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         String s = formatter.format(d.plusDays(i));
-        System.out.println(s);
         Date date = Date.from(d.plusDays(i).atZone(ZoneId.systemDefault()).toInstant());
         return date;
 
     }
 
     public static Elements getSlotDataEls(Document doc) {
-        return doc.select(".data tbody tr");
+        return doc.select(".data").get(0).select("tr");
     }
 
+
+    /**
+     * 偽物語専用の店舗情報
+     */
     @Data
-    public static class UnitData {
-        String BB回数;
-        String RB回数;
-        String BB確率;
-        String 合成回数;
-        String 総スタート;
-        String 最終スタート;
-        String 最大メダル;
-        String 日付;
-        Date date;
+    public static class Tenp {
+        String 店名;
+        String url;
 
-        public UnitData(Element el) {
-            Elements els = el.select("td");
-            BB回数 = els.get(1).text();
-            RB回数 = els.get(2).text();
-            BB確率 = els.get(3).text();
-            合成回数 = els.get(4).text();
-            総スタート = els.get(5).text();
-            最終スタート = els.get(6).text();
-            最大メダル = els.get(7).text();
-            日付 = els.get(0).text();
-
+        public Tenp(String 店名,String url) {
+            this.店名 = 店名;
+            this.url = url;
         }
     }
 }

@@ -2,6 +2,7 @@ package pachinko.db;
 
 import common.db.MappedSuper;
 import lombok.Data;
+import nise.Main;
 
 import javax.persistence.Entity;
 import java.util.Date;
@@ -12,6 +13,8 @@ import java.util.Date;
 @Data
 @Entity
 public class Papimo extends MappedSuper {
+    String 店名;
+    String 台番号;
     Integer BB回数;
     Integer RB回数;
     Integer BB確率;
@@ -24,17 +27,5 @@ public class Papimo extends MappedSuper {
     Integer 最終スタート;
     Integer 最大メダル;
     Date date;
-//    public Papimo(Main.UnitData data) {
-//
-//        this.BB回数 = Integer.valueOf(data.getBB回数());
-//        this.RB回数 = Integer.valueOf(data.getRB回数());
-//        this.総スタート = Integer.valueOf(data.get総スタート().replace(",",""));
-//
-//        this.BB回数 = this.総スタート/this.BB回数;
-//        this.RB回数 = this.総スタート/this.RB回数;
-//        this.合成確率 = this.総スタート/(this.BB回数+this.RB回数);
-//        this.合計回数 = this.BB回数+this.RB回数;
-//
-//        date = data.getDate();
-//    }
+
 }
